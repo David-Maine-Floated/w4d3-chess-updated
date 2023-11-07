@@ -1,4 +1,5 @@
 require_relative "piece"
+require_relative "pawn"
 require "byebug"
 
 
@@ -25,9 +26,9 @@ class Board
       if idx.include?(row_i)
         row.each_with_index do |col, col_i|
           if row_i == 1 
-            row[col_i] = Piece.new(:white, self, [row_i, col_i])
+            row[col_i] = Pawn.new(:white, self, [row_i, col_i])
           elsif row_i == 6
-            row[col_i] = Piece.new(:black, self, [row_i, col_i])
+            row[col_i] = Pawn.new(:black, self, [row_i, col_i])
           end
         end
       end

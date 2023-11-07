@@ -1,7 +1,6 @@
 require_relative "piece"
 
 class Pawn < Piece
-
   def initialize
     super
     @type = :pawn
@@ -35,5 +34,6 @@ class Pawn < Piece
 
 
   attr_reader :has_moved?, :positions
+  attr_accessor :has_moved?
 
 end
