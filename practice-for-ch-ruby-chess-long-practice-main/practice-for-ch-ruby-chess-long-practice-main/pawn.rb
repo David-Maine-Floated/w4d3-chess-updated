@@ -1,17 +1,25 @@
 require_relative "piece"
+# still trying to make pawn#moves work. for fun, ask about class display method so we dont have to see the entire board when we want to look at a pawn.
 
 class Pawn < Piece
-  def initialize
+  def initialize(color, board, pos)
     super
     @type = :pawn
-    @has_moved? = false
+    @has_moved = false
+  end
+
+  def display
+    board.each do |row|
+      
+
+    end
   end
 
   def moves
     x, y = positions
     possible_moves = []
 
-    if !has_moved?
+    if !has_moved
       possible_moves << [x+2, y]
     end
 
@@ -33,7 +41,7 @@ class Pawn < Piece
   end
 
 
-  attr_reader :has_moved?, :positions
-  attr_accessor :has_moved?
+  attr_reader :positions
+  attr_accessor :has_moved
 
 end
