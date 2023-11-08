@@ -1,47 +1,61 @@
 require_relative "piece"
-# still trying to make pawn#moves work. for fun, ask about class display method so we dont have to see the entire board when we want to look at a pawn.
+# still trying to make pawn#moves work. for fun, ask about class display method so we dont have to see the entire 
+# board when we want to look at a pawn.
 
 class Pawn < Piece
   def initialize(color, board, pos)
     super
-    @type = :pawn
+
     @has_moved = false
   end
 
-  def display
-    board.each do |row|
-      
-
-    end
+  def symbol
+    "♟︎".colorize(color)
   end
 
   def moves
-    x, y = positions
+    x, y = position
     possible_moves = []
 
     if !has_moved
-      possible_moves << [x+2, y]
+      if self.color == :white
+        possible_moves << [x+2, y]
+      else
+        possible_moves << [x-2, y]
+      end
     end
 
-    possible_move_pos = [x+1, y]
+    possible_move_pos = (self.color == :white) ? [x+1, y] : [x-1, y]
 
-    if board[possible_move_pos] == nil
+    if board[possible_move_pos].empty?
       possible_moves << possible_move_pos
     end
 
-    possible_attack_pos_1 = [x+1, y+1]
+    if self.color == :white
+      possible_attack_positions = [[x+1, y+1], [x+1, y-1]]
+    else
+      possible_attack_positions = [[x-1, y-1], [x-1, y+1]]
+    end
 
-    space = board[possible_attack_pos_1]
+    possible_attack_positions.each do |attack_pos|
+      space = board[attack_pos]
 
-    if !space.nil? && space.color != self.color
-      possible_moves << possible_attack_pos_1
+      if space.empty? && space.color != self.color
+        possible_moves << possible_attack_positions
+      end
+
     end
 
     return possible_moves
   end
 
+  def inspect
+    "#{self.name}, #{color}, #{position}"
+  end
 
-  attr_reader :positions
+
+
+
   attr_accessor :has_moved
 
 end
